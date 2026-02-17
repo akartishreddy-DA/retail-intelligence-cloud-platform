@@ -9,8 +9,7 @@ This project simulates how a retail organization designs a cloud-based data ware
 It demonstrates modern data engineering practices including dimensional modeling, SCD Type 2 implementation, automated warehouse updates, and executive-level reporting.
 
 ---
-
-## 🏗 Architecture
+## Architecture
 
 ![Architecture Diagram](docs/architecture_diagram.png)
 
