@@ -1,96 +1,100 @@
-# Retail Analytics Cloud Pipeline
+# Retail Intelligence Cloud Platform
 
 ## 📌 Project Overview
 
-An end-to-end cloud data analytics pipeline built using:
+Retail Intelligence Cloud Platform is an end-to-end retail analytics solution built on Snowflake.  
 
-- Snowflake (Data Warehouse)
-- dbt (Transformations)
-- Airflow (Orchestration)
-- SQL (Star Schema + SCD Type 2)
-- BI Views for Executive Reporting
+This project simulates how a retail organization designs a cloud-based data warehouse to support executive decision-making, historical tracking, and performance analytics.
 
-This project simulates a real-world retail analytics architecture from raw ingestion to executive dashboards.
+It demonstrates modern data engineering practices including dimensional modeling, SCD Type 2 implementation, automated warehouse updates, and executive-level reporting.
 
 ---
 
 ## 🏗 Architecture
 
-Raw Data → Staging → SCD Type 2 Dimensions → Fact Table → Analytical Views → Dashboards
+![Architecture Diagram](docs/architecture_diagram.png)
 
-### Layers Implemented
+### Data Flow
 
-### 🥉 Bronze Layer
-- Raw customer data
-- Cleaned staging table
-
-### 🥈 Silver Layer
-- SCD Type 2 Customer Dimension
-- Automated via Streams & Tasks
-- Surrogate key management
-
-### 🥇 Gold Layer
-- Sales Fact Table
-- Date Dimension
-- Revenue by Region
-- Executive Dashboard Views
+Raw Retail Data  
+→ Snowflake Staging Layer  
+→ Star Schema (Fact & Dimensions)  
+→ Automated SCD Processing  
+→ Analytical Views  
+→ Executive Dashboard  
 
 ---
 
-## ⚙️ Key Data Engineering Concepts Implemented
+## 🧱 Data Warehouse Design
 
-- Slowly Changing Dimensions (Type 2)
-- Surrogate Keys
-- Star Schema Modeling
-- Snowflake Streams
-- Snowflake Tasks
-- Fact-Dimension Relationships
-- Foreign Key Constraints
-- Analytical View Creation
+### Star Schema Implementation
 
----
+### Fact Table
+- **FACT_SALES**
+  - Sale ID
+  - Customer Surrogate Key
+  - Sale Date
+  - Sale Amount
 
-## 📊 Analytical Views Created
-
-- VW_YEARLY_REVENUE
-- VW_TIME_REVENUE_SUMMARY
-- VW_REVENUE_BY_REGION
-- VW_EXECUTIVE_DASHBOARD
-- VW_FULL_DASHBOARD
+### Dimension Tables
+- **DIM_CUSTOMER_SCD** (Slowly Changing Dimension Type 2)
+- **DIM_DATE**
 
 ---
 
-## 📈 Example Insights
+## 🔄 SCD Type 2 Implementation
 
-- Revenue by Region
-- Monthly Sales Performance
-- Average Order Value
-- Total Customers
-- Regional Revenue Trends
+The customer dimension tracks historical changes using:
 
----
+- EFFECTIVE_FROM
+- EFFECTIVE_TO
+- IS_CURRENT flag
+- Surrogate Key (CUSTOMER_SK)
 
-## 🚀 How to Run Snowflake Layer
-
-Execute SQL files in this order:
-
-1. 04_SCD_TYPE2_CUSTOMER.sql
-2. 05_SCD_AUTOMATION.sql
-3. 06_FACT_LAYER.sql
-4. 07_DIM_DATE.sql
-5. 99_PROJECT_FINAL.sql
+This enables full historical reporting and customer attribute versioning.
 
 ---
 
-## 🎯 What This Project Demonstrates
+## ⚙️ Automation (Snowflake Native)
 
-✔ Real-world warehouse design  
-✔ Automation using Streams & Tasks  
-✔ Star schema implementation  
-✔ End-to-end analytical pipeline  
-✔ Executive-level data mart creation  
+Implemented using:
+
+- **Stream** → `CUSTOMER_GOLD_STREAM`
+- **Task** → `SCD_CUSTOMER_TASK`
+
+The task automatically:
+- Detects changes in customer data
+- Closes previous records
+- Inserts new versions
+
+This simulates production-grade automated warehouse maintenance.
+
+---
+
+## 📊 Analytical Views
+
+The following views power executive reporting:
+
+- `VW_YEARLY_REVENUE`
+- `VW_TIME_REVENUE_SUMMARY`
+- `VW_REVENUE_BY_REGION`
+- `VW_EXECUTIVE_DASHBOARD`
+- `VW_FULL_DASHBOARD`
+
+These provide:
+
+- Revenue by year and month
+- Regional sales performance
+- Order volume analysis
+- Average order value
+- Customer metrics
+
+---
+
+## 📂 Project Structure
+
 
 ---
 
 ## 👨‍💻 Author
-Kartish Reddy
+Kartish Reddy Anugu
